@@ -1,0 +1,87 @@
+import UIKit
+
+var str = "Hello, playground"
+
+
+/*
+ There are N cities numbered from 1 to N.
+
+ You are given connections, where each connections[i] = [city1, city2, cost] represents the cost to connect city1 and city2 together.  (A connection is bidirectional: connecting city1 and city2 is the same as connecting city2 and city1.)
+
+ Return the minimum cost so that for every pair of cities, there exists a path of connections (possibly of length 1) that connects those two cities together.  The cost is the sum of the connection costs used. If the task is impossible, return -1.
+
+ Example 1:
+
+ Input: N = 3, connections = [[1,2,5],[1,3,6],[2,3,1]]
+ Output: 6
+ Explanation:
+ Choosing any 2 edges will connect all cities so we choose the minimum 2.
+ Example 2:
+
+
+
+ Input: N = 4, connections = [[1,2,3],[3,4,4]]
+ Output: -1
+ Explanation:
+ There is no way to connect all cities even if all edges are used.
+  
+
+ Note:
+
+ 1 <= N <= 10000
+ 1 <= connections.length <= 10000
+ 1 <= connections[i][0], connections[i][1] <= N
+ 0 <= connections[i][2] <= 10^5
+ connections[i][0] != connections[i][1]
+ */
+
+
+class Solution {
+    
+    var parent:[Int] = []
+    var unvisitedCities = 0
+    
+    func setParent(for x:Int,and y:Int) {
+        let parentofX = findParent(of: x)
+        let parentofY = findParent(of: y)
+        
+        if parentofX != parentofY {
+            parent[parentofX] = parentofY
+            unvisitedCities -= 1
+        }
+    }
+    
+    func findParent(of x:Int) -> Int {
+        if parent[x] == x {
+            return parent[x]
+        }
+        
+        parent[x] = findParent(of: parent[x])
+        return parent[x]
+    }
+    
+    func minimumCost(_ N: Int, _ connections: [[Int]]) -> Int {
+        
+        unvisitedCities = N
+        
+        for i in 0...N {
+            parent.append(i)
+        }
+        
+        var connections = connections
+        connections.sort{ $0[2] < $1[2] }
+        
+        var distanceTravelled = 0
+        
+        for path in connections{
+            var cityOne = path[0] , cityTwo = path[1]
+            
+            if findParent(of: cityOne) != findParent(of: cityTwo) {
+                distanceTravelled += path[2]
+                setParent(for: cityOne, and: cityTwo)
+            }
+        }
+        
+        return unvisitedCities == 1 ? distanceTravelled : -1
+    }
+}
