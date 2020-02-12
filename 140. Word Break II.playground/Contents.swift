@@ -62,7 +62,6 @@ class Solution {
         
         for word in wordDict {
             if s.hasPrefix(word) {
-//                let subWordBreaks = dfs(String(charArray[word.endIndex...]), wordDict, &cache)
                 let subWordBreaks = dfs(s.substring(from: word.endIndex), wordDict, &cache)
 
                 for subWordBreak in subWordBreaks{

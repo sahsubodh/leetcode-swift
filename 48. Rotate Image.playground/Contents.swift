@@ -56,6 +56,8 @@ class Solution {
                 matrix[j][i] = temp
             }
         }
+        
+        print(matrix)
 
 //        Then flip the matrix horizontally. (swap(matrix[i][j], matrix[i][matrix.length-1-j])
         for i in 0..<matrix.count{
@@ -67,3 +69,12 @@ class Solution {
         }
     }
 }
+
+
+var matrix = [[1,2,3],
+  [4,5,6],
+  [7,8,9]]
+
+var sol = Solution()
+sol.rotate(&matrix)
+

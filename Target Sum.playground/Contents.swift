@@ -6,6 +6,44 @@ var str = "Hello, playground"
     var result = 0
 
     func findTargetSumWays(_ nums: [Int], _ S: Int) -> Int {
+      if nums.count == 0 {
+          return 0
+      }
+      
+      var sum = 0
+      for num in nums {
+          sum += num
+      }
+      
+      if (S < -sum || S > sum) {
+          return 0
+      }
+      
+       //dp[i] -> the number of ways to have sum = i - sum
+     var dp = Array.init(repeating:0,count:sum*2+1)
+      dp[sum] = 1
+      
+
+      for i in 0..<nums.count{
+          var tempTarget = Array.init(repeating:0,count:sum*2+1)
+          for j in 0..<sum*2+1 {
+              if dp[j] != 0 {
+                  tempTarget[j - nums[i]] += dp[j]
+                  tempTarget[j + nums[i]] += dp[j]
+              }
+          }
+          
+          dp = tempTarget
+      }
+      
+      print(dp)
+        print(sum)
+        print(sum+S)
+      return dp[sum+S]
+      
+  }
+
+    func findTargetSumWays1(_ nums: [Int], _ S: Int) -> Int {
         
         var memo:[[Int]] = Array.init(repeating: Array.init(repeating: Int.min, count: 2001), count: nums.count)
         
