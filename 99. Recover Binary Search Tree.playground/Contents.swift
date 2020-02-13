@@ -63,14 +63,29 @@ var str = "Hello, playground"
  
 
 class Solution {
-    func recoverTree(_ root: TreeNode?) {
+   func recoverTree(_ root: TreeNode?) {
+        var last: TreeNode?
+        var disorders = [(TreeNode, TreeNode)]()
+        traversal(root, &last, &disorders)
+
+        // when we find the first disorder, the bigger one is the wrong one;
+        // for the second disorder, the smaller one is the wrong one;
+        // if there is only one disorder, the two numbers are both wrong.
+        let node1 = disorders.first!.0
+        let node2 = disorders.last!.1
+        (node1.val, node2.val) = (node2.val, node1.val)
+    }
+    
+    func traversal(_ node: TreeNode?, _ last: inout TreeNode?, _ disorders: inout [(TreeNode, TreeNode)]) {
+        guard let node = node else { return }
         
-        var stack:[TreeNode] = []
+        traversal(node.left, &last, &disorders)
         
-        stack.append(root)
+        if let last = last, last.val > node.val {
+            disorders.append((last, node))
+        }
+        last = node
         
-        
-        
-        return root
+        traversal(node.right, &last, &disorders)
     }
 }
