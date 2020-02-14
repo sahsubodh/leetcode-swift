@@ -43,41 +43,32 @@ var str = "Hello, playground"
  
 
 
+
 class Solution {
     func findDuplicateSubtrees(_ root: TreeNode?) -> [TreeNode?] {
-        
-        guard root != nil else {
-            return []
-        }
-        
-        var result:[TreeNode] = []
-        var dict:[String:Int] = [:]
-        postOrder(root!,dict,result)
-        
-        return result
+        var res:[TreeNode?] = []
+        var map:[String:Int] = [:]
+        helper(root, &res, &map)
+        return res
     }
     
-    private func postOrder(_ cur:TreeNode?,_ dict:[String:Int],_ result:[TreeNode])
-    -> String {
-        
-        var result = result
-        var dict = dict
-        
-        guard cur != nil else {
-            return "#"
+    func helper(_ root: TreeNode?, _ res: inout [TreeNode?], _ map: inout [String:Int]) -> String{
+        guard let node = root else { return "#" }
+        let text = node.val.description + "," + helper(node.left, &res, &map) + "," + helper(node.right, &res, &map)
+        if map[text] == nil{
+            map[text] = 1
+        }else{
+            if map[text] == 1{
+                res.append(node)
+                map[text]! += 1
+            }
         }
-        
-        var serial = String(cur!.val) + ","  + postOrder(cur?.left!,dict,result) + ","
-            + postOrder(cur?.right!,dict,result)
-    
-        if dict[serial,default:0] == 1 {
-            result.append((cur)!)
-        }
-        
-        dict[serial,default:0]  += 1
-        return serial
+        return text
     }
 }
+
+
+
 
 // public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
 //     List<TreeNode> res = new LinkedList<>();
