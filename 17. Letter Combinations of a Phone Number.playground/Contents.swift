@@ -37,6 +37,7 @@ class Solution {
             
         }
         
+        print(strings)
         var result:[String] = []
         
         backtrack(0, strings, "", &result)
@@ -60,5 +61,5 @@ class Solution {
     
 }
 var sol = Solution()
-sol.letterCombinations("23")
+print(sol.letterCombinations("23"))
 
