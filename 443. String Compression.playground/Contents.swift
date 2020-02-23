@@ -72,7 +72,6 @@ class Solution {
             }
             let count = j - read
             read = j
-            
             //write
             chars[write] = char
             write += 1
@@ -85,6 +84,13 @@ class Solution {
                 write = k
             }
         }
+        print(chars)
         return write
     }
 }
+
+
+var input:[Character] = ["a","b","b","b","b","b","b","b","b","b","b","b","b"]
+
+var sol = Solution()
+print(sol.compress(&input))

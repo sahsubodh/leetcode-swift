@@ -66,3 +66,9 @@ class Solution {
 
     
 }
+
+var sol = Solution()
+sol.canCross([0,1,3,5,6,8,12,17])
+
+
+
