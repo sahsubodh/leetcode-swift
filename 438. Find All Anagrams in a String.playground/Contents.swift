@@ -39,6 +39,9 @@ class Solution {
         let s = s.map {letterIndex($0)}
         let p = p.map {letterIndex($0)}
         
+        print(s)
+        print(p)
+        
         // dict for char count in p
         var ref = Array(repeating: 0, count: 26)
         for char in p {
